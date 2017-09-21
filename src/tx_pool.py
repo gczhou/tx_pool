@@ -1,7 +1,8 @@
 import pylru
 from hashlib import sha256 as H256
-from transactions import SignedTransaction
 from enum import Enum
+
+from transactions import SignedTransaction
 
 class Strategy(Enum):
     FIFO = 1
@@ -54,13 +55,3 @@ class Pool(Filter):
     def __init__(self, package_limit, filter, order_set, txs, strategy, order):
         self.package_limit = package_limit
         pass
-
-def main():
-    filter = Filter(capacity=100)
-    print filter.check(1)
-    pool = Pool(100, filter, 1, 1, 1, 1)
-    print "It's Ok!"
-    pass
-
-if __name__ == "__main__":
-    main()

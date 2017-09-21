@@ -1,16 +1,15 @@
-import tx_pool
+from .tx_pool import Pool
 
 class CandidatePool:
     fields = [
-        ('pool', tx_pool),
-        ('height', int),
-        ('sender', long)
+        ('pool', Pool),
+        ('height', int)
     ]
 
-    def __init__(self):
-        self.pool = tx_pool::pool(1000)
+    def __init__(self, tx):
+        self.pool = Pool(10000)
         self.height = 0
-        self.sender = Sender
+        self.sender = tx
 
     def get_height(self):
         return self.height
@@ -30,5 +29,5 @@ class CandidatePool:
     def pub_block(self, block):
         pass
 
-    def update_txpool(self, txs[]):
+    def update_txpool(self, txs):
         pass

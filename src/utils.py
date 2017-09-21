@@ -36,10 +36,3 @@ def normalize_address(x, allow_blank=False):
     if len(x) != 20:
         raise Exception("Invalid address format: %r" % x)
     return x
-
-def main():
-    normalize_address("ea4f6bc98b456ef085da5c424db710489848cab5")
-    print "It's OK!"
-
-if __name__ == "__main__":
-    main()

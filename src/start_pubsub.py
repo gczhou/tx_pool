@@ -1,7 +1,7 @@
 import pika
 import threading
 
-def start_pubsub(name, *key, tx, rx):
+def start_pubsub(name, key, tx, rx):
     def consumeCallBack(ch, method, properties, body):
         print "In ConsumeCallBack"
 
