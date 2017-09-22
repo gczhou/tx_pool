@@ -5,6 +5,10 @@ from blockchain_pb2 import *
 from communication_pb2 import *
 from request_pb2 import *
 
+import snappy
+
+from google.protobuf.internal import decoder
+
 
 class submoudules(Enum):
     JSON_RPC = 1
@@ -73,13 +77,13 @@ def id_to_key(id):
         return "json_rpc"
     elif id == submodules.NET:
         return "net"
-    elif id == submodules::CHAIN:
+    elif id == submodules.CHAIN:
         return "chain"
-    elif id == submodules::CONSENSUS:
+    elif id == submodules.CONSENSUS:
         return "consensus"
-    elif id == submodules::CONSENSUS_CMD:
+    elif id == submodules.CONSENSUS_CMD:
         return "consensus_cmd"
-    elif id == submodules::AUTH:
+    elif id == submodules.AUTH:
         return "auth"
     else:
         return ""
@@ -90,13 +94,13 @@ def key_to_id(key):
     elif key.starts_with("net"):
         return submodules.NET
     elif key.starts_with("chain"):
-        return submodules::CHAIN
+        return submodules.CHAIN
     elif key.starts_with("consensus_cmd"):
-        return submodules::CONSENSUS_CMD
+        return submodules.CONSENSUS_CMD
     elif key.starts_with("consensus"):
-        return submodules::CONSENSUS
+        return submodules.CONSENSUS
     elif key.starts_with("auth"):
-        return submodules::AUTH
+        return submodules.AUTH
     else:
         return 0
 
@@ -110,10 +114,36 @@ def de_cmd_id(cmd_id):
 def display_cmd(cmd_id):
     cd = de_cmd_id(cmd_id)
 
+ZERO_ORIGIN = 99999
+
 def create_msg(sub, top, msg_type, content):
     msg = Message()
-    
+    msg.cmd_id = top
+    msg.type = msg_type
+    msg.operate = BROADCAST
+    msg.origin = ZERO_ORIGIN
+    msg.content = content
+    return msg
+
 
 def create_msg_ex(sub, top, msg_type, operate, origin, content):
-    pass
+    msg = create_msg(sub, top, msg_type, content)
+    msg.origin = origin
+    msg.operate = operate
+    return msg
+
+def parse_msg(input_msg):
+    assert isinstance(input_msg, Message)
+    msg = input_msg.decoder()
+    print msg
+    return msg
+
+def main():
+    msg = create_msg(0, 0, 0, "0x12345")
+    create_msg_ex(0, 0, 0, 0, 0, "0x12345")
+    parse_msg(msg)
+
+if __name__ == "__main__":
+    main()
+
 
