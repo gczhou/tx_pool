@@ -1,5 +1,11 @@
 from enum import Enum
 
+from auth_pb2 import *
+from blockchain_pb2 import *
+from communication_pb2 import *
+from request_pb2 import *
+
+
 class submoudules(Enum):
     JSON_RPC = 1
     NET = 2
@@ -94,8 +100,20 @@ def key_to_id(key):
     else:
         return 0
 
-def create_msg(sub, top, msg_type, content):
-    pass
+def de_cmd_id(cmd_id):
+    submodule = cmd_id >> 16
+    sub = submodule
+    submodule = submodule << 16
+    topic = (cmd_id - submodule)
+    return (sub, topic)
 
-def 
+def display_cmd(cmd_id):
+    cd = de_cmd_id(cmd_id)
+
+def create_msg(sub, top, msg_type, content):
+    msg = Message()
+    
+
+def create_msg_ex(sub, top, msg_type, operate, origin, content):
+    pass
 
