@@ -36,6 +36,24 @@ class topics(Enum):
     BLOCK_TXHASHES = 14
     BLOCK_TXHASHES_REQ = 15
 
+class MsgClass(Enum):
+    REQUEST = 0
+    RESPONSE = 1
+    HEADER = 2
+    BODY = 3
+    BLOCK = 4
+    TX = 5
+    TXRESPONSE = 6
+    STATUS = 7
+    VERIFYTXREQ = 8
+    VERIFYTXRESP = 9
+    VERIFYBLKREQ = 10
+    VERIFYBLKRESP = 11
+    BLOCKTXHASHES = 12
+    BLOCKTXHASHESREQ = 13
+    MSG = 14
+}
+
 def topic_to_string(top):
     if top == topics.DEFAULT:
         return "default"
@@ -133,14 +151,20 @@ def create_msg_ex(sub, top, msg_type, operate, origin, content):
     return msg
 
 def parse_msg(input_msg):
-    assert isinstance(input_msg, Message)
-    msg = input_msg.decoder()
+    #assert isinstance(input_msg, Message)
+    msg = Message()
+    msg.ParseFromString(input_msg)
     print msg
     return msg
 
-def main():
+def broadcast():
     msg = create_msg(0, 0, 0, "0x12345")
-    create_msg_ex(0, 0, 0, 0, 0, "0x12345")
+    return msg.SerializeToString()
+
+def main():
+    #msg = create_msg(0, 0, 0, "0x12345")
+    #create_msg_ex(0, 0, 0, 0, 0, "0x12345")
+    msg = broadcast()
     parse_msg(msg)
 
 if __name__ == "__main__":

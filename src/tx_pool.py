@@ -1,5 +1,4 @@
 import pylru
-from hashlib import sha256 as H256
 from enum import Enum
 
 from transactions import SignedTransaction
@@ -11,7 +10,7 @@ class Strategy(Enum):
 
 class Filter:
     fields = [
-        ('key', H256),
+        ('key', long),
         ('value', int)
     ]
 
@@ -24,7 +23,7 @@ class Filter:
 
 class TxOrder:
     fields = [
-        ('hash', H256),
+        ('hash', long),
         ('order', long)
     ]
 
@@ -35,7 +34,10 @@ class TxOrder:
     def Eq(self):
         pass
 
-    def ParitalEq(self):
+    def ParitalEq(self, other):
+        return self == other
+
+    def PartialOrd(self, other):
         pass
 
     def Ord(self):
@@ -52,6 +54,31 @@ class Pool(Filter):
         ('order', long)
     ]
 
-    def __init__(self, package_limit, filter, order_set, txs, strategy, order):
+    def __init__(self, package_limit, capacity):
         self.package_limit = package_limit
+        self.filter = Filter(capacity)
+        self.order_set = None
+        self.txs = None
+        self.strategy = Strategy.FIFO
+        self.order = 0
+
+    def get_order():
+        pass
+
+    def get_order_by_priority():
+        pass
+
+    def get_order_by_vip():
+        pass
+
+    def enqueue(tx):
+        pass
+
+    def update_order_set():
+        pass
+
+    def update(txs):
+        pass
+
+    def package(height):
         pass
