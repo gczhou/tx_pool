@@ -52,7 +52,6 @@ class MsgClass(Enum):
     BLOCKTXHASHES = 12
     BLOCKTXHASHESREQ = 13
     MSG = 14
-}
 
 def topic_to_string(top):
     if top == topics.DEFAULT:

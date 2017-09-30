@@ -1,6 +1,6 @@
 from .tx_pool import Pool
-from proto.lib import *
-from proto.blockchain_pb2 import *
+from .proto.lib import *
+from .proto.blockchain_pb2 import *
 
 class CandidatePool:
     fields = [
@@ -9,7 +9,7 @@ class CandidatePool:
     ]
 
     def __init__(self, tx):
-        self.pool = Pool(10000)
+        self.pool = Pool(10000, 3000)
         self.height = 0
         self.sender = tx
 
